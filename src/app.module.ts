@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common'
-import { AppController } from './app.controller'
 import { BathroomModule } from './bathroom/bathroom.module'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
@@ -24,7 +23,7 @@ import { ValuationModule } from './valuation/valuation.module'
     BathroomModule,
     ValuationModule,
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [],
 })
 export class AppModule {}
