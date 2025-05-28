@@ -33,15 +33,31 @@ export class BathroomRepository {
     return newBathroom.save()
   }
 
-  async findAllBathrooms(searBathroomsDTO: SearchBathRoomsDto) {
-    const { page, limit, offset, ...rest } = searBathroomsDTO
-    const bathrooms = await this.bathroomModel
-      .find({
-        ...rest,
-      })
-      .skip(searBathroomsDTO.offset ? Number(offset) : 0)
-      .limit(searBathroomsDTO.limit ? Number(limit) : 10)
-      .exec()
+  async findAllBathrooms(searchBathroomsDTO: SearchBathRoomsDto) {
+    const { page, limit, offset, ...rest } = searchBathroomsDTO
+
+    const filter: any = {}
+
+    // Campos que aceitam busca parcial com regex (strings)
+    const regexFields = ['name', 'description', 'city', 'state']
+
+    for (const [key, value] of Object.entries(rest)) {
+      if (value !== undefined && value !== null) {
+        if (regexFields.includes(key)) {
+          filter[key] = { $regex: value, $options: 'i' }
+        } else {
+          filter[key] = value
+        }
+      }
+    }
+
+    const query = this.bathroomModel.find(filter)
+
+    // Paginação
+    if (offset !== undefined) query.skip(Number(offset))
+    if (limit !== undefined) query.limit(Number(limit))
+
+    const bathrooms = await query.exec()
 
     return [bathrooms, bathrooms.length]
   }

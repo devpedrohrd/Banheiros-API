@@ -15,7 +15,7 @@ import { SearchBathRoomsDto } from './dto/searchBathRooms.dto'
 import { ApiResponse, ApiTags } from '@nestjs/swagger'
 
 @ApiTags('bathroom')
-@Controller('bathroom')
+@Controller('bathrooms')
 export class BathroomController {
   constructor(private readonly bathroomService: BathroomService) {}
 
@@ -115,5 +115,10 @@ export class BathroomController {
   })
   async remove(@Param('id') id: string) {
     return this.bathroomService.remove(id)
+  }
+
+  @Get('refresh')
+  async refreshApi() {
+    return await this.bathroomService.refreshApi()
   }
 }

@@ -7,6 +7,7 @@ import { CreateBathroomDto } from './dto/create-bathroom.dto'
 import { UpdateBathroomDto } from './dto/update-bathroom.dto'
 import { BathroomRepository } from './bathroom.repository'
 import { SearchBathRoomsDto } from './dto/searchBathRooms.dto'
+import { Cron, CronExpression } from '@nestjs/schedule'
 
 @Injectable()
 export class BathroomService {
@@ -49,5 +50,10 @@ export class BathroomService {
 
   async remove(id: string) {
     return this.bathroomRepository.deleteBathroom(id)
+  }
+
+  @Cron(CronExpression.EVERY_10_MINUTES) // Runs every minute
+  async refreshApi() {
+    return console.log('Refreshing API data...')
   }
 }

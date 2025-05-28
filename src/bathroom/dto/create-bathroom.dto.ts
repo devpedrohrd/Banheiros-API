@@ -89,7 +89,7 @@ export class CreateBathroomDto implements Bathroom {
   ratingNegative: number
 }
 
-class AddressJsonDto implements AddressJson {
+export class AddressJsonDto implements AddressJson {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({

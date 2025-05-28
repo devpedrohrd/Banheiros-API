@@ -3,6 +3,7 @@ import { BathroomModule } from './bathroom/bathroom.module'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
 import { ValuationModule } from './valuation/valuation.module'
+import { ScheduleModule } from '@nestjs/schedule'
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ValuationModule } from './valuation/valuation.module'
     }),
     BathroomModule,
     ValuationModule,
+    ScheduleModule.forRoot(),
   ],
   controllers: [],
   providers: [],
